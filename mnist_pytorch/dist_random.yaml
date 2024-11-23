@@ -1,0 +1,32 @@
+name: mnist_pytorch_dist_random_search
+hyperparameters:
+  learning_rate:
+    type: double
+    minval: .0001
+    maxval: 1.0
+  n_filters1:
+    type: int
+    minval: 8
+    maxval: 64
+  n_filters2:
+    type: int
+    minval: 8
+    maxval: 72
+  dropout1:
+    type: double
+    minval: .2
+    maxval: .8
+  dropout2:
+    type: double
+    minval: .2
+    maxval: .8
+searcher:
+  name: random
+  metric: accuracy
+  smaller_is_better: true
+  max_trials: 2
+resources:
+  slots_per_trial: 1
+entrypoint: >-
+  python3 -m determined.launch.torch_distributed
+  python3 train.py --epochs 1

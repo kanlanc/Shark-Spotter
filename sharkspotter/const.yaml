@@ -1,0 +1,65 @@
+description: YOLOv7 training for shark detection
+project: sharkspotter
+workspace: sharkspotter-workspace
+
+name: sharkspotter-yolov7
+hyperparameters:
+  data_dir: /data/sharkspotter  # Base directory in container
+  train_dir: /data/sharkspotter/train
+  valid_dir: /data/sharkspotter/valid
+  test_dir: /data/sharkspotter/test
+  nc: 1  # number of classes (just sharks)
+  names: ['shark']
+  
+  # Model Parameters
+  img_size: 640
+  batch_size: 16
+  learning_rate: 0.001
+  weight_decay: 0.0005
+  momentum: 0.937
+  
+  # Training Augmentation Parameters
+  hsv_h: 0.015
+  hsv_s: 0.7
+  hsv_v: 0.4
+  degrees: 0.0
+  translate: 0.2
+  scale: 0.5
+  shear: 0.0
+  perspective: 0.0
+  flipud: 0.5
+  fliplr: 0.5
+  mosaic: 1.0
+  mixup: 0.15
+  
+  # Loss Function Weights
+  box: 0.05
+  cls: 0.3
+  obj: 1.0
+
+bind_mounts:
+  - host_path: /teamspace/studios/this_studio/sharkspotter/train
+    container_path: /data/sharkspotter/train
+    read_only: true
+  - host_path: /teamspace/studios/this_studio/sharkspotter/valid
+    container_path: /data/sharkspotter/valid
+    read_only: true
+  - host_path: /teamspace/studios/this_studio/sharkspotter/test
+    container_path: /data/sharkspotter/test
+    read_only: true
+
+searcher:
+  name: single
+  metric: validation_loss
+  max_length:
+    epochs: 100
+  smaller_is_better: true
+
+environment:
+  image: determinedai/environments:cuda-11.3-pytorch-1.10-gpu-0.19.4
+
+resources:
+  slots_per_trial: 1
+
+entrypoint: python3 train.py --epochs 100
+

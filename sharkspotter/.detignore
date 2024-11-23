@@ -1,0 +1,27 @@
+# Ignore all data directories
+train/*
+valid/*
+test/*
+
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignore model weights
+*.pt
+*.pth
+*.weights
+
+# Ignore system files
+.DS_Store
+*.swp
+
+# Ignore git
+.git/
+.gitignore
+
+# Ignore any temporary files
+*.tmp
+*.bak
+*.log
