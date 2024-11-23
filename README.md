@@ -9,3 +9,6 @@ This project can be further extended to save people who get swept away by the oc
 This was done using faster RCNN and the model can be fitted on top of any drone tech and transmitted using radio waves.
 
 The first intention was to use an underwater sonnar but after more research, it turns out this can be very disruptive to the underwater ecosystem
+
+![alt text](image.png)
+![alt text](image-1.png)
